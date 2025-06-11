@@ -17,7 +17,7 @@
 
 import * as grpcWeb from 'grpc-web';
 
-import * as greeter_pb from './greeter_pb'; // proto import: "greeter.proto"
+import * as greeter_pb from './proto/greeter_pb'; // proto import: "greeter.proto"
 
 
 export class GreeterClient {
