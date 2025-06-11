@@ -1,8 +1,8 @@
 "use client"; // This is a client component
 
 import { useState } from "react";
-import { GreeterClient } from "../GreeterServiceClientPb"; // Adjust path if you moved the files
-import { HelloRequest } from "../greeter_pb"; // Adjust path
+import { GreeterClient } from "@/proto/GreeterServiceClientPb"; // Adjust path if you moved the files
+import { HelloRequest } from "@/proto/greeter_pb"; // Adjust path
 
 export default function Home() {
   const [name, setName] = useState("World");
