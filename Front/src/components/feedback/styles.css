@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+.success-feedback {
+    @apply bg-green-100 border-green-300 text-green-800;
+}
+
+.error-feedback {
+    @apply bg-red-100 border-red-300 text-red-800;
+}

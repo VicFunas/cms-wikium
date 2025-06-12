@@ -5,6 +5,7 @@ import { useState } from "react";
 // import { HelloRequest } from "@/proto/greeter_pb"; // Adjust path
 import { ModServiceClient } from "@/proto/ModServiceClientPb";
 import { ListModRequest } from "@/proto/mod_pb";
+import { Feedback } from "@/components";
 
 export default function Home() {
   const [name, setName] = useState("World");
@@ -41,7 +42,8 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-50">
+    <main className="px-4 pt-2">
+      <h1 className="text-4xl mb-6 text-center italic">Faith Conquest CMS</h1>
       <div className="z-10 w-full max-w-2xl items-center justify-center font-mono text-sm lg:flex flex-col p-8 border rounded-lg bg-white shadow-md">
         <h1 className="text-4xl font-bold mb-6">gRPC-Web Client</h1>
         <div className="flex items-center space-x-4">
@@ -61,17 +63,19 @@ export default function Home() {
         </div>
         
         {greeting && (
-          <div className="mt-8 p-4 bg-green-100 border border-green-300 text-green-800 rounded-md w-full text-center">
-            <p className="font-semibold">Server Response:</p>
-            <p className="text-lg">{greeting}</p>
-          </div>
+          <Feedback
+            type="success"
+            label="Server Response"
+            content={greeting}
+          />
         )}
 
         {error && (
-            <div className="mt-8 p-4 bg-red-100 border border-red-300 text-red-800 rounded-md w-full text-center">
-              <p className="font-semibold">Error:</p>
-              <p className="text-lg">{error}</p>
-            </div>
+            <Feedback
+              type="success"
+              label="Error"
+              content={error}
+            />
         )}
       </div>
     </main>
