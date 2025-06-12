@@ -1,9 +1,13 @@
+name: conquest-cms
+
 services:
   go_server:
     build: .
-    environment:
-      # Pass the MONGO_URI from your host machine into the container
-      - MONGO_URI=${MONGO_URI:-}
+    env_file:
+      - .env
+    # environment:
+    #   # Pass the MONGO_URI from your host machine into the container
+    #   - MONGO_URI=${MONGO_URI:-}
     networks:
       - grpc_net
 
@@ -12,8 +16,10 @@ services:
     privileged: true
     volumes:
       - ./envoy.yaml:/etc/envoy/envoy.yaml
+    env_file:
+      - .env
     ports:
-      - "8080:8080" # Expose Envoy's port to the host
+      - ${ENVOY_PORT:-8080}:8080 # Expose Envoy's port to the host
     depends_on:
       - go_server
     networks:

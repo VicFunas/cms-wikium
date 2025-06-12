@@ -10,7 +10,12 @@ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
 
 - Proto directory: Proto service definition (For grpc and generate interfaces)
 
-Generate interface files
+Generate interface files:
+```sh
+protoc -I=. --go_out=. --go-grpc_out=. proto/**/*.proto
+```
+
+Or, for example, for a single file:
 ```sh
 protoc --go_out=. --go-grpc_out=. proto/greeter.proto
 ```

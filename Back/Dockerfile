@@ -13,7 +13,7 @@ RUN go mod download
 COPY . .
 
 # Build the Go app for a Linux environment
-RUN CGO_ENABLED=0 GOOS=linux go build -o /go/bin/server .
+RUN CGO_ENABLED=0 GOOS=linux go build -o /go/bin/server ./cmd/server
 
 # Start a new stage from scratch for a smaller final image
 FROM alpine:latest

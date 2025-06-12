@@ -23,5 +23,5 @@ Thumbs.db
 .env.development.local
 
 # Proto generated files
-**/proto
+**/proto/*
 !**/proto/*.proto

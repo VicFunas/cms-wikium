@@ -11,8 +11,8 @@ import (
 	// Import the generated Go code
 	pb "github.com/VicFunas/cms-wikium/proto"
 
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/v2/mongo"
+	"go.mongodb.org/mongo-driver/v2/mongo/options"
 	"google.golang.org/grpc"
 )
 
@@ -49,11 +49,13 @@ func main() {
 		log.Println("MONGO_URI environment variable not set, using default.")
 	}
 
-
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	_, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(mongoURI))
+	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
+	opts := options.Client().ApplyURI(mongoURI).SetServerAPIOptions(serverAPI)
+
+	client, err := mongo.Connect(opts)
 	if err != nil {
 		log.Fatalf("Failed to connect to MongoDB: %v", err)
 	}
