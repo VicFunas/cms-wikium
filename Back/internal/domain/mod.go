@@ -1,8 +1,8 @@
 package domain
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import "go.mongodb.org/mongo-driver/v2/bson"
 
 type Mod struct {
-	ID   primitive.ObjectID `bson:"_id"`
-	Name string             `bson:"name"`
+	ID   bson.ObjectID `bson:"_id,omitempty" json:"id"`
+	Name string        `bson:"name"`
 }

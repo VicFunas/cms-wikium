@@ -2,13 +2,15 @@ package main
 
 import (
 	"context"
-	// "fmt"
 	"log"
 	"net"
 	"os"
 	"time"
 
 	// Import the generated Go code
+	"github.com/VicFunas/cms-wikium/internal/handler"
+	"github.com/VicFunas/cms-wikium/internal/repository"
+	"github.com/VicFunas/cms-wikium/internal/service"
 	pb "github.com/VicFunas/cms-wikium/proto"
 
 	"go.mongodb.org/mongo-driver/v2/mongo"
@@ -45,7 +47,7 @@ func main() {
 	mongoURI := os.Getenv("MONGO_URI")
 	if mongoURI == "" {
 		// Set a default for local testing if the env var isn't present
-		mongoURI = "mongodb://localhost:27017" 
+		mongoURI = "mongodb://localhost:27017"
 		log.Println("MONGO_URI environment variable not set, using default.")
 	}
 
@@ -61,6 +63,11 @@ func main() {
 	}
 	log.Println("Connected to MongoDB!")
 
+	// --- Initialize layers ---
+	modRepo := repository.NewModRepository(client.Database("cms"))
+	modService := service.NewModService(modRepo)
+	modHandler := handler.NewModHandler(modService)
+
 	// --- Set up gRPC Server ---
 	// Listen on port 50051
 	lis, err := net.Listen("tcp", ":50051")
@@ -71,6 +78,7 @@ func main() {
 	s := grpc.NewServer()
 	// Register our service with the gRPC server.
 	pb.RegisterGreeterServer(s, &server{mongoClient: client})
+	pb.RegisterModServiceServer(s, modHandler)
 
 	log.Printf("gRPC server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {

@@ -1,0 +1,35 @@
+// proto/page_service.proto
+syntax = "proto3";
+
+package cms;
+option go_package = "./proto";
+
+// Service for managing CMS pages
+service ModService {
+  rpc CreateMod (CreateModRequest) returns (CreateModResponse);
+  rpc GetMod (GetModRequest) returns (GetModResponse);
+  // ... other RPCs like UpdateMod, DeleteMod, etc.
+}
+
+// --- Messages for ModService ---
+
+message Mod {
+  string id = 1;
+  string name = 2;
+}
+
+message CreateModRequest {
+  string name = 1;
+}
+
+message CreateModResponse {
+  Mod mod = 1;
+}
+
+message GetModRequest {
+  string mod_id = 1;
+}
+
+message GetModResponse {
+  Mod mod = 1;
+}
