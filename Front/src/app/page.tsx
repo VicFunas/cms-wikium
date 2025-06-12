@@ -1,8 +1,10 @@
 "use client"; // This is a client component
 
 import { useState } from "react";
-import { GreeterClient } from "@/proto/GreeterServiceClientPb"; // Adjust path if you moved the files
-import { HelloRequest } from "@/proto/greeter_pb"; // Adjust path
+// import { GreeterClient } from "@/proto/GreeterServiceClientPb"; // Adjust path if you moved the files
+// import { HelloRequest } from "@/proto/greeter_pb"; // Adjust path
+import { ModServiceClient } from "@/proto/ModServiceClientPb";
+import { ListModRequest } from "@/proto/mod_pb";
 
 export default function Home() {
   const [name, setName] = useState("World");
@@ -11,21 +13,29 @@ export default function Home() {
 
   const getGreeting = () => {
     // The proxy will run on port 8080
-    const client = new GreeterClient("http://localhost:8080");
-    const request = new HelloRequest();
-    request.setName(name);
+    // const client = new GreeterClient("http://localhost:8080");
+    // const request = new HelloRequest();
+    // request.setName(name);
+
+    const client = new ModServiceClient("http://localhost:8080");
+    const request = new ListModRequest();
+    // request.setModId(name);
 
     setGreeting("");
     setError("");
 
-    client.sayHello(request, {}, (err, response) => {
+    client.listMods(request, {}, (err, response) => {
       if (err) {
         console.error(`Unexpected error for sayHello: code = ${err.code}, message = ${err.message}`);
         setError(`Error: ${err.message}`);
         return;
       }
       if (response) {
-        setGreeting(response.getMessage());
+        let greet = "HALO";
+        response.getModsList().forEach(mod => {
+          greet += ` ${mod.getName()}`
+        })
+        setGreeting(greet);
       }
     });
   };

@@ -18,6 +18,11 @@ func NewModService(repo *repository.ModRepository) *ModService {
 	}
 }
 
+// ListMod just passes the call through to the repository.
+func (s *ModService) ListMods(ctx context.Context) ([]domain.Mod, error) {
+	return s.modRepo.GetAllMods(ctx)
+}
+
 // GetMod just passes the call through to the repository.
 func (s *ModService) GetMod(ctx context.Context, id string) (domain.Mod, error) {
 	return s.modRepo.GetModByID(ctx, id)
@@ -26,7 +31,18 @@ func (s *ModService) GetMod(ctx context.Context, id string) (domain.Mod, error) 
 // CreateMod creates the domain model and calls the repository to save it.
 func (s *ModService) CreateMod(ctx context.Context, req *pb.CreateModRequest) (domain.Mod, error) {
 	mod := domain.Mod{
-		Name: req.Name,
+		Name:        req.Name,
+		Description: req.Description,
 	}
 	return s.modRepo.CreateMod(ctx, mod)
+}
+
+// UpdateMod fetches the mod from database, sets the fields and calls repository to save it
+func (s *ModService) UpdateMod(ctx context.Context, req *pb.UpdateModRequest) (domain.Mod, error) {
+	mod := domain.Mod{
+		Name:        req.Name,
+		Description: req.Description,
+	}
+
+	return s.modRepo.UpdateMod(ctx, req.ModId, mod)
 }

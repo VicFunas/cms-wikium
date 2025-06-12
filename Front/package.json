@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "grpc-gen": "protoc -I=. greeter.proto --js_out=import_style=commonjs,binary:. --grpc-web_out=import_style=typescript,mode=grpcwebtext:."
+    "grpc-gen": "protoc -I=. src/proto/*.proto --js_out=import_style=commonjs,binary:. --grpc-web_out=import_style=typescript,mode=grpcwebtext:."
   },
   "dependencies": {
     "google-protobuf": "^3.21.4",

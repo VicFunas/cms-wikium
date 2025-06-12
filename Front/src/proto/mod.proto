@@ -6,7 +6,7 @@ option go_package = "./proto";
 
 // Service for managing CMS pages
 service ModService {
-  rpc ListMods (ListModsRequest) returns (ListModsResponse);
+  rpc ListMods (ListModRequest) returns (ListModResponse);
   rpc GetMod (GetModRequest) returns (GetModResponse);
   rpc CreateMod (CreateModRequest) returns (CreateModResponse);
   rpc UpdateMod (UpdateModRequest) returns (UpdateModResponse);
@@ -37,10 +37,10 @@ message GetModResponse {
   Mod mod = 1;
 }
 
-message ListModsRequest {
+message ListModRequest {
 }
 
-message ListModsResponse {
+message ListModResponse {
   repeated Mod mods = 1;
 }
 
